@@ -1,0 +1,89 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #1c1c1c;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+main {
+    width: 90%;
+    max-width: 1200px;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.form-container {
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    padding: 30px;
+    margin-right: 20px;
+    width: 45%;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+.calendar-container {
+    width: 45%;
+    background-color: #2c2c2c;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 2.5rem;
+    color: #e63946;
+}
+
+p {
+    font-size: 18px;
+    color: gray;
+}
+
+label {
+    margin: 15px 0 5px;
+    display: block;
+    font-weight: 600;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #e63946;
+    border-radius: 5px;
+    background-color: #444;
+    color: #ffffff;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    background-color: #e63946;
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    flex: 1;
+    margin: 0 5px;
+}
+
+button:hover {
+    background-color: #d62839;
+}
+
+#calendar {
+    max-width: 100%; 
+}

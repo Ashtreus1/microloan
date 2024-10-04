@@ -1,5 +1,3 @@
-flask
-scikit-learn
-numpy
+Flask
 pandas
-plotly
+scikit-learn

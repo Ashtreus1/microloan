@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Microl</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <main>
+        <div class="container">
+            <div class="form-container">
+                <h1>Microl</h1>
+                <form method="POST" action="/predict">
+                    <label for="loan_amount">Loan Amount</label>
+                    <input type="number" name="loan_amount" required placeholder="Enter loan amount" step="0.01">
+
+                    <label for="expected_revenue">Expected Revenue</label>
+                    <input type="number" name="expected_revenue" required placeholder="Enter expected revenue" step="0.01">
+
+                    <div class="button-group">
+                        <button type="submit">Predict</button>
+                        <button type="reset">Reset</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="calendar-container">
+                <div id="calendar-container">
+                    <div id="calendar"></div>
+                </div>
+                {% if prediction is not none and repayment_dates %}
+                    <h2>Predicted Repayment Time: {{ prediction }} month</h2>
+                    <script>
+                        var repaymentDates = {{ repayment_dates | tojson | safe }};
+                        console.log("Repayment Dates:", repaymentDates);
+                    </script>
+                {% endif %}
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="{{ url_for('static', filename='js/calendar.js') }}"></script>
+</body>
+</html>
