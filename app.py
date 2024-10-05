@@ -1,3 +1,4 @@
+import pandas as pd
 from flask import Flask, render_template, request, jsonify
 from datetime import datetime, timedelta
 import joblib
@@ -16,9 +17,13 @@ def home():
 def predict():
     loan_amount = float(request.form['loan_amount'])
     expected_revenue = float(request.form['expected_revenue'])
+    business_expenses = float(request.form['business_expenses'])
 
-    # Predict repayment time in months and round to the nearest whole number
-    prediction = model.predict(np.array([[loan_amount, expected_revenue]]))
+    # Create a DataFrame with appropriate feature names
+    input_data = pd.DataFrame([[loan_amount, expected_revenue, business_expenses]], columns=['loan_amount', 'expected_revenue', 'business_expenses'])
+
+    # Predict repayment time in months
+    prediction = model.predict(input_data)
     months = round(prediction[0])
 
     # Calculate repayment dates
