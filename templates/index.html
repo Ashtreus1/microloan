@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Microl</title>
+    <title>Micrl</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet" />
@@ -13,13 +13,16 @@
     <main>
         <div class="container">
             <div class="form-container">
-                <h1>Microl</h1>
+                <h1>Micrl</h1>
                 <form method="POST" action="/predict">
                     <label for="loan_amount">Loan Amount</label>
-                    <input type="number" name="loan_amount" required placeholder="Enter loan amount" step="0.01">
+                    <input type="number" name="loan_amount" required placeholder="Enter loan amount" step="500">
 
                     <label for="expected_revenue">Expected Revenue</label>
-                    <input type="number" name="expected_revenue" required placeholder="Enter expected revenue" step="0.01">
+                    <input type="number" name="expected_revenue" required placeholder="Enter expected revenue" step="500">
+
+                    <label for="payment_per_installment">Max Payment Per Installment</label>
+                    <input type="number" name="payment_per_installment" required placeholder="Enter max amount per payment" step="100"/>
 
                     <div class="button-group">
                         <button type="submit">Predict</button>
@@ -33,7 +36,7 @@
                     <div id="calendar"></div>
                 </div>
                 {% if prediction is not none and repayment_dates %}
-                    <h2>Predicted Repayment Time: {{ prediction }} month</h2>
+                    <h2>Predicted Repayment Time: {{ prediction }} months</h2>
                     <script>
                         var repaymentDates = {{ repayment_dates | tojson | safe }};
                         console.log("Repayment Dates:", repaymentDates);

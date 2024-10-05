@@ -6,8 +6,9 @@ document.addEventListener('DOMContentLoaded', function() {
         return;
     }
 
-    var events = repaymentDates.map(date => ({
-        start: date,               
+    var events = repaymentDates.map(item => ({
+        title: `$${item.amount}`,
+        start: item.date,               
         allDay: true,              
         color: 'red',              
     }));

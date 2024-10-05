@@ -18,7 +18,7 @@ if os.path.isfile(csv_file_path):
 
     # Features and target variable
     X = df[['loan_amount', 'expected_revenue']]
-    y = df['repayment_time']
+    y = df['num_payments_per_month']
 
     # Train/test split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -28,6 +28,6 @@ if os.path.isfile(csv_file_path):
     model.fit(X_train, y_train)
 
     # Save the model
-    joblib.dump(model, 'model/trained_repayment_model.pkl')
+    joblib.dump(model, 'model/trained_payments_model.pkl')
 else:
     print(f"CSV file not found: {csv_file_path}")
