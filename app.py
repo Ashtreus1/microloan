@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 from flask import Flask, render_template, request
+=======
+import pandas as pd
+from flask import Flask, render_template, request, jsonify
+>>>>>>> 58eb84503becb4bcd183df83803917fc411e3679
 from datetime import datetime, timedelta
 import pandas as pd
 import joblib
@@ -22,6 +27,7 @@ def predict():
     print("Form Data:", request.form)
     loan_amount = float(request.form['loan_amount'])
     expected_revenue = float(request.form['expected_revenue'])
+<<<<<<< HEAD
     payment_per_installment = float(request.form['payment_per_installment'])
     
     # Fixed interest rate logic based on loan amount
@@ -35,6 +41,16 @@ def predict():
     # Predict repayment time in months and round to the nearest whole number
     prediction_repayment = model_repayment.predict(np.array([[loan_amount, expected_revenue]]))
     months = round(prediction_repayment[0])
+=======
+    business_expenses = float(request.form['business_expenses'])
+
+    # Create a DataFrame with appropriate feature names
+    input_data = pd.DataFrame([[loan_amount, expected_revenue, business_expenses]], columns=['loan_amount', 'expected_revenue', 'business_expenses'])
+
+    # Predict repayment time in months
+    prediction = model.predict(input_data)
+    months = round(prediction[0])
+>>>>>>> 58eb84503becb4bcd183df83803917fc411e3679
 
     # Calculate total interest
     total_interest = loan_amount * interest_rate * (months / 12)
