@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 from flask import Flask, render_template, request
-=======
-import pandas as pd
-from flask import Flask, render_template, request, jsonify
->>>>>>> 58eb84503becb4bcd183df83803917fc411e3679
 from datetime import datetime, timedelta
 import pandas as pd
 import joblib
@@ -11,8 +6,6 @@ import numpy as np
 import os
 
 app = Flask(__name__)
-
-csv_file_path = 'data/loan_data.csv'
 
 # Load the trained models
 model_repayment = joblib.load('model/trained_repayment_model.pkl')
@@ -24,10 +17,8 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    print("Form Data:", request.form)
     loan_amount = float(request.form['loan_amount'])
     expected_revenue = float(request.form['expected_revenue'])
-<<<<<<< HEAD
     payment_per_installment = float(request.form['payment_per_installment'])
     
     # Fixed interest rate logic based on loan amount
@@ -41,16 +32,6 @@ def predict():
     # Predict repayment time in months and round to the nearest whole number
     prediction_repayment = model_repayment.predict(np.array([[loan_amount, expected_revenue]]))
     months = round(prediction_repayment[0])
-=======
-    business_expenses = float(request.form['business_expenses'])
-
-    # Create a DataFrame with appropriate feature names
-    input_data = pd.DataFrame([[loan_amount, expected_revenue, business_expenses]], columns=['loan_amount', 'expected_revenue', 'business_expenses'])
-
-    # Predict repayment time in months
-    prediction = model.predict(input_data)
-    months = round(prediction[0])
->>>>>>> 58eb84503becb4bcd183df83803917fc411e3679
 
     # Calculate total interest
     total_interest = loan_amount * interest_rate * (months / 12)
@@ -61,12 +42,12 @@ def predict():
     # Calculate total payments
     total_payments = total_repayment_amount / payment_per_installment
 
+    # Calculate the number of payments per month
+    payments_per_month = int(np.ceil(total_payments / months))
+
     # Calculate repayment dates starting after a week
     start_date = datetime.now() + timedelta(days=7)
     repayment_dates = []
-
-    # Calculate the number of payments per month
-    payments_per_month = int(np.ceil(total_payments / months))
 
     # Ensure we do not exceed the predicted repayment months
     for month in range(months):
@@ -90,6 +71,29 @@ def predict():
             'date': payment_date.strftime("%Y-%m-%d"),
             'amount': round(payment_per_installment, 2)
         })
+
+    # Prepare data for CSV
+    data_to_save = {
+        'loan_amount': loan_amount,
+        'expected_revenue': expected_revenue,
+        'payment_per_installment': payment_per_installment,
+        'predicted_months': months,
+        'total_repayment_amount': total_repayment_amount,
+        'total_payments': total_payments,
+        'num_payments_per_month': payments_per_month  
+    }
+
+    # Save the data to CSV
+    csv_file_path = 'data/data.csv'
+    
+    # Create a DataFrame and append to CSV
+    df = pd.DataFrame([data_to_save])
+    
+    # Check if the file exists to determine whether to write headers
+    if not os.path.isfile(csv_file_path):
+        df.to_csv(csv_file_path, mode='w', index=False)  
+    else:
+        df.to_csv(csv_file_path, mode='a', header=False, index=False) 
 
     # Return the rendered template with repayment dates and microloan amounts
     return render_template('index.html', prediction=months, repayment_dates=repayment_dates)

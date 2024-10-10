@@ -4,8 +4,7 @@ from sklearn.linear_model import LinearRegression
 import joblib
 import os
 
-
-csv_file_path = 'data/loan_data.csv'
+csv_file_path = 'data/data.csv'
 
 # Load data from CSV file
 if os.path.isfile(csv_file_path):
